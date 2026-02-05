@@ -6,7 +6,7 @@
 
   tasks:
     - name: Create a new token using username/password
-      ansible.controller.token:
+      awx.awx.token:
         description: 'Temporary token for subsequent tasks'
         scope: "write"
         state: present
@@ -16,7 +16,7 @@
         validate_certs: false
 
     - name: List running jobs for the hello_world.yml playbook
-      ansible.controller.job_list:
+      awx.awx.job_list:
         status: successful
         query: {"playbook": "hello_world.yml"}
         controller_oauthtoken: "{{ controller_token }}"
