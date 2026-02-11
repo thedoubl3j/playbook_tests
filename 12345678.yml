@@ -24,6 +24,28 @@
         controller_oauthtoken: '{{ lookup("env", "CONTROLLER_OAUTH_TOKEN") }}'
         controller_host: '{{ lookup("env", "CONTROLLER_HOST") }}'
         validate_certs: false
+    
+    - name: Call Automation Controller API
+      when: ansible_facts['controller_token'] is defined and
+            ansible_facts['controller_token']['token'] is defined
+      block:
+        - name: List running jobs
+          register: testing_jobs
+          ignore_errors: true
+          environment:
+            CONTROLLER_OAUTH_TOKEN: "{{ ansible_facts['controller_token']['token'] }}"
+          ansible.controller.job_list:
+            status: successful
+            query:
+              playbook: "12345678.yml"
+            #aap_token: "{{ ansible_facts['aap_token']['token'] }}"
+            controller_host: '{{ lookup("env", "CONTROLLER_HOST") }}'
+            validate_certs: false
+
+        - name: Debug token
+          ansible.builtin.debug:
+            var: ansible_facts['controller_token']
+            verbosity: 3
 
     - name: test debug
       no_log: True
