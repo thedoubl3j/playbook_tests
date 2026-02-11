@@ -1,8 +1,12 @@
 ---
-- name: "Playbook to show wrong behaviour of createtokenr"
+- name: "Playbook to show censoring"
   hosts: localhost
   connection: local
   gather_facts: False
 
   tasks:
+    - name: test debug
+      ansible.builtin.debug:
+        msg: "2024-05-15"
+        verbosity: 3
 
