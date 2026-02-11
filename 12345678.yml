@@ -6,6 +6,7 @@
 
   tasks:
     - name: test debug
+      no_log: True
       ansible.builtin.debug:
         msg: "2024-05-15"
         verbosity: 3
