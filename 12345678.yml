@@ -5,6 +5,26 @@
   gather_facts: False
 
   tasks:
+    - name: Create a new token using username/password
+      ansible.controller.token:
+        description: Temp token
+        scope: write
+        state: present
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
+        controller_host: "{{ tower_host }}"
+        validate_certs: False
+    
+    - name: Create team
+      ansible.controller.team:
+        name: Number 1
+        description: Team Description
+        organization: Default
+        state: present
+        controller_oauthtoken: "{{ controller_token }}"
+        controller_host: "{{ tower_host }}"
+        validate_certs: false
+
     - name: test debug
       no_log: True
       ansible.builtin.debug:
